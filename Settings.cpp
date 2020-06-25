@@ -702,8 +702,8 @@ void SoapySDRPlay::setFrequency(const int direction,
       if ((name == "RF") && (chParams->tunerParams.rfFreq.rfHz != (uint32_t)frequency))
       {
       
-         int tsave=device.tuner;
-         if(device.tuner == 3){
+         sdrplay_api_TunerSelectT tsave=device.tuner;
+         if(device.tuner == sdrplay_api_Tuner_Both){
              if(channel == 0){
                  device.tuner=sdrplay_api_Tuner_A;
              }
@@ -715,7 +715,7 @@ void SoapySDRPlay::setFrequency(const int direction,
             sdrplay_api_Update(device.dev, device.tuner, sdrplay_api_Update_Tuner_Frf, sdrplay_api_Update_Ext1_None);
          }
          
-         device.tuner=(sdrplay_api_TunerSelectT)tsave;
+         device.tuner=tsave;
       }
       // can't set ppm for RSPduo slaves
       else if ((name == "CORR") && deviceParams->devParams &&
